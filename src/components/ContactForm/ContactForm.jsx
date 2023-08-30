@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../store/contactsSlice';
 import { Form, Label, Input, Button } from './ContactForm.styled';
-import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
-const ContactForm = ({ onAddContact }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -17,13 +20,8 @@ const ContactForm = ({ onAddContact }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newContact = {
-      name,
-      number,
-    };
-
-
-    onAddContact(newContact);
+    const newContact = { name, number, id: uuidv4() };
+    dispatch(addContact(newContact));
     setName('');
     setNumber('');
   };
@@ -57,10 +55,6 @@ const ContactForm = ({ onAddContact }) => {
       <Button type="submit">Add Contact</Button>
     </Form>
   );
-};
-
-ContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
 };
 
 export default ContactForm;

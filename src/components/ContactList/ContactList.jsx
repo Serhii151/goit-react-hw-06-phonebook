@@ -1,10 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { List } from './ContactList.styled';
 import ContactItem from '../ContactItem/ContactItem';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const ContactList = ({ onDelete }) => {
+const ContactList = () => {
   const contacts = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.contacts.filter);
 
@@ -15,14 +14,10 @@ const ContactList = ({ onDelete }) => {
   return (
     <List>
       {filteredContacts.map(contact => (
-        <ContactItem key={contact.id} contact={contact} onDelete={onDelete} />
+        <ContactItem key={contact.id} contact={contact} />
       ))}
     </List>
   );
-};
-
-ContactList.propTypes = {
-  onDelete: PropTypes.func.isRequired,
 };
 
 export default ContactList;

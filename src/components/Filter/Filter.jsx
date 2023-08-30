@@ -1,9 +1,17 @@
 import React from 'react';
-import { Label } from 'components/ContactForm/ContactForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { Label } from '../ContactForm/ContactForm.styled';
 import { FilterInput } from './Filter.styled';
-import PropTypes from 'prop-types';
+import { setFilter } from '../store/contactsSlice';
 
-const Filter = ({ filter, handleFilterChange }) => {
+const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(state => state.contacts.filter);
+
+  const handleFilterChange = event => {
+    dispatch(setFilter(event.target.value));
+  };
+
   return (
     <Label>
       Find contacts by name
@@ -14,11 +22,6 @@ const Filter = ({ filter, handleFilterChange }) => {
       />
     </Label>
   );
-};
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  handleFilterChange: PropTypes.func.isRequired,
 };
 
 export default Filter;
